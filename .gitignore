@@ -30,3 +30,6 @@ Thumbs.db
 # Test temp files
 nestjs/reject-*/
 nestjs/tmp_*
+
+# Blueprint document (internal)
+*技术蓝皮书*.md
