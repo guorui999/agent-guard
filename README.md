@@ -1,9 +1,9 @@
 # AgentGuard
 
-[![License](https://img.shields.io/github/license/agent-guard/agent-guard?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/github/license/guorui999/agent-guard?style=flat-square)](LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/agent-guard?style=flat-square)](https://pypi.org/project/agent-guard/)
 [![NPM](https://img.shields.io/npm/v/@agent-guard/nestjs?style=flat-square)](https://www.npmjs.com/package/@agent-guard/nestjs)
-[![CI](https://img.shields.io/github/actions/workflow/status/agent-guard/agent-guard/ci.yml?style=flat-square)](https://github.com/agent-guard/agent-guard/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/guorui999/agent-guard/ci.yml?style=flat-square)](https://github.com/guorui999/agent-guard/actions)
 
 > Policy engine for securing AI agent tool calls. | AI Agent 工具调用安全策略引擎。
 >
