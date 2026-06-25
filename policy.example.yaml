@@ -1,0 +1,27 @@
+policies:
+  - name: "高危指令拦截"
+    match:
+      tool: "shell_execute"
+    pre:
+      - type: "block_risk_args"
+        regex: "rm -rf|drop table|shutdown"
+        action: "REJECT"
+
+  - name: "接口限流（需人工审批）"
+    match:
+      tool: "*"
+    pre:
+      - type: "rate_limit"
+        max_calls_per_session: 5
+        action: "ASK_HUMAN"
+
+  - name: "数据脱敏"
+    match:
+      tool: "*"
+    post:
+      - type: "mask_sensitive"
+        patterns:
+          - regex: "\\d{17}[0-9Xx]"
+            replace: "[证件号已隐藏]"
+          - regex: "1[3-9]\\d{9}"
+            replace: "[手机号已隐藏]"

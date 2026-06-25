@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-guard"
+version = "0.1.0"
+description = "AI Agent security guard - policy engine for LLM tool calls"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "AgentGuard Team"},
+]
+dependencies = [
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "jsonschema>=4.0",
+    "typing-extensions>=4.0",
+]
+
+[project.optional-dependencies]
+langchain = [
+    "langchain-core>=0.1.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0",
+    "coverage>=7.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agent_guard*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+python_files = ["test_*.py"]
+addopts = "--cov=agent_guard --cov-report=term-missing --cov-fail-under=80"
