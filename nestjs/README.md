@@ -81,3 +81,9 @@ npm install
 npm run test
 npm run test:cov
 ```
+
+---
+
+## License | 开源许可证
+
+[MIT License](../LICENSE) — Copyright (c) 2026 guorui999

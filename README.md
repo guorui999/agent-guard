@@ -164,6 +164,25 @@ agent-guard/
 
 ---
 
-## License | 许可证
+## License | 开源许可证
 
-MIT
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+Copyright (c) 2026 guorui999
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+```
+
+You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. | 你可以自由使用、复制、修改、合并、发布、分发、再许可和/或出售本软件的副本。
+
+本项目采用 **MIT 许可证** 开源，详细信息请参阅 [LICENSE](LICENSE) 文件。

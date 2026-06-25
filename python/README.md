@@ -71,3 +71,9 @@ cd python
 pip install -e ".[dev]"
 pytest --cov=agent_guard --cov-report=term-missing
 ```
+
+---
+
+## License | 开源许可证
+
+[MIT License](../LICENSE) — Copyright (c) 2026 guorui999
