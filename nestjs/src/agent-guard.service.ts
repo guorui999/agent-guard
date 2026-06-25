@@ -47,9 +47,15 @@ export class AgentGuardService implements OnModuleInit {
   private suspensionRequests: Map<string, SuspensionRequest> = new Map();
   private requestIdCounter = 0;
 
+  private suspensionTimeout = 300000;
+
   constructor(
     @Inject(AGENT_GUARD_OPTIONS) private options: AgentGuardOptions,
-  ) {}
+  ) {
+    if (options.suspensionTimeout !== undefined) {
+      this.suspensionTimeout = options.suspensionTimeout;
+    }
+  }
 
   onModuleInit() {
     const configPath = path.resolve(this.options.configPath);
@@ -174,7 +180,7 @@ export class AgentGuardService implements OnModuleInit {
           this.suspensionRequests.delete(id);
           reject(new Error(`Suspension ${id} timed out`));
         }
-      }, 300000);
+      }, this.suspensionTimeout);
     });
   }
 

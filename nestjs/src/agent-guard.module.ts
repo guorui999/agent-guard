@@ -4,6 +4,7 @@ import { AGENT_GUARD_OPTIONS } from './agent-guard.constants';
 
 export interface AgentGuardOptions {
   configPath: string;
+  suspensionTimeout?: number;
 }
 
 @Module({})

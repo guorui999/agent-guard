@@ -138,9 +138,87 @@ describe('AgentGuardService', () => {
     });
   });
 
+  describe('suspension timeout', () => {
+    let timeoutService: AgentGuardService;
+
+    beforeEach(async () => {
+      const tmpConfig = path.resolve(__dirname, '../tmp_timeout_test.yaml');
+      fs.writeFileSync(tmpConfig, yaml.dump({
+        policies: [{
+          name: '超时测试',
+          match: { tool: 'timeout_tool' },
+          pre: [{ type: 'rate_limit', max_calls_per_session: 1, action: 'ASK_HUMAN' }],
+        }],
+      }), 'utf-8');
+
+      const module: TestingModule = await Test.createTestingModule({
+        providers: [
+          {
+            provide: AGENT_GUARD_OPTIONS,
+            useValue: { configPath: tmpConfig, suspensionTimeout: 100 },
+          },
+          AgentGuardService,
+        ],
+      }).compile();
+
+      timeoutService = module.get<AgentGuardService>(AgentGuardService);
+      await module.init();
+    });
+
+    afterEach(() => {
+      const tmpConfig = path.resolve(__dirname, '../tmp_timeout_test.yaml');
+      if (fs.existsSync(tmpConfig)) fs.unlinkSync(tmpConfig);
+    });
+
+    it('should throw on suspension timeout', async () => {
+      await timeoutService.executePre('timeout_tool', { cmd: 'a' }, 'timeout-session');
+      await expect(
+        timeoutService.executePre('timeout_tool', { cmd: 'b' }, 'timeout-session'),
+      ).rejects.toThrow(Error);
+    }, 10000);
+  });
+
+  describe('rate_limit with REJECT action', () => {
+    let rejectService: AgentGuardService;
+
+    beforeEach(async () => {
+      const tmpDir = fs.mkdtempSync('reject-');
+      const tmpConfig = path.join(tmpDir, 'reject.yaml');
+      fs.writeFileSync(tmpConfig, yaml.dump({
+        policies: [{
+          name: '严格限流',
+          match: { tool: 'strict_tool' },
+          pre: [{ type: 'rate_limit', max_calls_per_session: 2, action: 'REJECT' }],
+        }],
+      }), 'utf-8');
+
+      const module: TestingModule = await Test.createTestingModule({
+        providers: [
+          { provide: AGENT_GUARD_OPTIONS, useValue: { configPath: tmpConfig } },
+          AgentGuardService,
+        ],
+      }).compile();
+
+      rejectService = module.get<AgentGuardService>(AgentGuardService);
+      await module.init();
+    });
+
+    it('should reject on exceeding rate limit with REJECT action', async () => {
+      await rejectService.executePre('strict_tool', { cmd: 'a' }, 'reject-session');
+      await rejectService.executePre('strict_tool', { cmd: 'b' }, 'reject-session');
+      await expect(
+        rejectService.executePre('strict_tool', { cmd: 'c' }, 'reject-session'),
+      ).rejects.toThrow(PolicyViolationError);
+    });
+  });
+
   describe('suspension management', () => {
-    it('should approve suspension', async () => {
-      const promise = service.executePre('suspension_test', { cmd: 'test' }, 'suspension-session');
+    it('should approve suspension via rate limit threshold', async () => {
+      const sessionId = 'susp-approve';
+      for (let i = 0; i < 5; i++) {
+        await service.executePre('susp_approve_tool', { cmd: `pre${i}` }, sessionId);
+      }
+      const promise = service.executePre('susp_approve_tool', { cmd: 'trigger' }, sessionId);
       setTimeout(() => {
         const pending = service.listPending();
         if (pending.length > 0) {
@@ -148,7 +226,22 @@ describe('AgentGuardService', () => {
         }
       }, 200);
       const result = await promise;
-      expect(result).toEqual({ cmd: 'test' });
+      expect(result).toEqual({ cmd: 'trigger' });
+    });
+
+    it('should reject suspension via rate limit threshold', async () => {
+      const sessionId = 'susp-reject';
+      for (let i = 0; i < 5; i++) {
+        await service.executePre('susp_reject_tool', { cmd: `pre${i}` }, sessionId);
+      }
+      const promise = service.executePre('susp_reject_tool', { cmd: 'trigger' }, sessionId);
+      setTimeout(() => {
+        const pending = service.listPending();
+        if (pending.length > 0) {
+          service.reject(pending[0].id, 'Not authorized');
+        }
+      }, 200);
+      await expect(promise).rejects.toThrow(PolicyViolationError);
     });
   });
 });

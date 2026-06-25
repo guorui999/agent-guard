@@ -26,3 +26,7 @@ Thumbs.db
 # Environment
 .env
 *.log
+
+# Test temp files
+nestjs/reject-*/
+nestjs/tmp_*
