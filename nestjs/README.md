@@ -7,7 +7,7 @@
 ## Installation | 安装
 
 ```bash
-npm install @agent-guard/nestjs
+npm install agent-guard-nestjs
 ```
 
 Requires Node.js >= 18.x, NestJS >= 10.x. | 需要 Node.js >= 18.x, NestJS >= 10.x。

@@ -1,5 +1,5 @@
 {
-  "name": "@agent-guard/nestjs",
+  "name": "agent-guard-nestjs",
   "version": "0.1.0",
   "description": "NestJS SDK for AgentGuard - AI Agent security policy engine",
   "license": "MIT",

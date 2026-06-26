@@ -1,8 +1,8 @@
 # AgentGuard
 
 [![License](https://img.shields.io/github/license/guorui999/agent-guard?style=flat-square)](LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/agent-guard?style=flat-square)](https://pypi.org/project/agent-guard/)
-[![NPM](https://img.shields.io/npm/v/@agent-guard/nestjs?style=flat-square)](https://www.npmjs.com/package/@agent-guard/nestjs)
+[![PyPI](https://img.shields.io/pypi/v/agenttoolguard?style=flat-square)](https://pypi.org/project/agenttoolguard/)
+[![NPM](https://img.shields.io/npm/v/agent-guard-nestjs?style=flat-square)](https://www.npmjs.com/package/agent-guard-nestjs)
 [![CI](https://img.shields.io/github/actions/workflow/status/guorui999/agent-guard/ci.yml?style=flat-square)](https://github.com/guorui999/agent-guard/actions)
 
 > Policy engine for securing AI agent tool calls. | AI Agent 工具调用安全策略引擎。
@@ -27,7 +27,7 @@
 ### Python SDK
 
 ```bash
-pip install agent-guard
+pip install agenttoolguard
 ```
 
 Requires Python >= 3.10. | 需要 Python >= 3.10。
@@ -35,7 +35,7 @@ Requires Python >= 3.10. | 需要 Python >= 3.10。
 ### NestJS SDK
 
 ```bash
-npm install @agent-guard/nestjs
+npm install agent-guard-nestjs
 ```
 
 Requires Node.js >= 18.x, NestJS >= 10.x. | 需要 Node.js >= 18.x, NestJS >= 10.x。
